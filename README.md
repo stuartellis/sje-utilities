@@ -12,7 +12,7 @@ If [gitleaks](https://github.com/zricethezav/gitleaks) is installed, it will run
 
 ## Setup
 
-First, install: 
+First, install these tools:
 
 - Node.js
 - The AWS CLI
