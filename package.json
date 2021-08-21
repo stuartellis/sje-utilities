@@ -4,7 +4,8 @@
   "description": "Tools and experiments",
   "scripts": {
     "cfn:lint": "cfn-lint cloudformation/**/*.yml",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -18,5 +19,12 @@
   "bugs": {
     "url": "https://github.com/stuartellis/sje-utilities/issues"
   },
-  "homepage": "https://github.com/stuartellis/sje-utilities#readme"
+  "homepage": "https://github.com/stuartellis/sje-utilities#readme",
+  "lint-staged": {
+    "*.{yml,yaml}": "cfn-lint"
+},
+  "devDependencies": {
+    "husky": "^7.0.0",
+    "lint-staged": "^11.1.2"
+  }
 }
