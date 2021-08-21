@@ -39,7 +39,7 @@ Parameters:
     Default: gp2
   KeyPairName:
     Type: AWS::EC2::KeyPair::KeyName
-    Description: The name of the key pair
+    Description: The name of the EC2 key pair
     Default: stuart-ellis-labs-default-eu-west-1
   SubnetId:
     Type: String
