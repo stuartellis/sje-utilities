@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: SNS message queue
+Description: SNS message topic
 
 Parameters:
 
