@@ -4,7 +4,7 @@ Description: SNS message topic
 Parameters:
 
   # Name of SNS Topic
-  # SNS topic names must be unique in your AWS account,
+  # SNS topic names must be unique in the AWS account,
   # and no more than 256 characters long
   TopicName:
     Description: SNS topic name (up to 256 characters)
@@ -34,10 +34,7 @@ Resources:
 Outputs:
 
   TopicArn:
-    Description: ARN of the newly created SNS topic
+    Description: ARN of the SNS topic
     Value: !Ref SNSTopic
     Export:
-      Name: !Join
-              - ''
-              - - !Ref AWS::StackName
-                - '-SNSTopicARN'
+      Name: !Sub '${AWS::StackName}-SNSTopicARN'
