@@ -1,4 +1,18 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-npx lint-staged
+if command -v gitleaks > /dev/null
+then
+  gitleaks --quiet --redact
+else
+  echo "ERROR: Please install gitleaks"
+  exit 1
+fi
+
+if command -v cfn-lint > /dev/null
+then
+  npx lint-staged --quiet
+else
+  echo "ERROR: Please install cfn-lint"
+  exit 1
+fi
