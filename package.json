@@ -1,0 +1,21 @@
+{
+  "name": "sje-utilities",
+  "version": "1.0.0",
+  "description": "Tools and experiments",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stuartellis/sje-utilities.git"
+  },
+  "keywords": [
+    "tools"
+  ],
+  "author": "Stuart Ellis <stuart@stuartellis.name>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/stuartellis/sje-utilities/issues"
+  },
+  "homepage": "https://github.com/stuartellis/sje-utilities#readme"
+}
