@@ -1,0 +1,14 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: |
+  {{description}}
+
+Resources:
+{{#each items}}
+  Secret{{cap this.key}}:
+    Type: AWS::SecretsManager::Secret
+    Properties:
+      Name: {{cap this.key}}
+      Description: {{cap this.key}}
+      SecretString: {{this.value}}
+
+{{/each}}
