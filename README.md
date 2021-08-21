@@ -1,2 +1,3 @@
 # sje-utilities
-Assorted bits
+
+Assorted tools and experiments.
