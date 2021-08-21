@@ -1,0 +1,43 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: SNS message queue
+
+Parameters:
+
+  # Name of SNS Topic
+  # SNS topic names must be unique in your AWS account,
+  # and no more than 256 characters long
+  TopicName:
+    Description: SNS topic name (up to 256 characters)
+    Type: 'String'
+    MinLength: '6'
+    MaxLength: '256'
+    AllowedPattern: '[-_a-zA-Z0-9]*'
+
+  # Short display name of SNS Topic
+  # Used for SMS message titles
+  # Must be no more than 10 characters long
+  DisplayName:
+    Description: SNS topic display name (10 characters or less)
+    Type: 'String'
+    MinLength: '3'
+    MaxLength: '10'
+    AllowedPattern: '[-_a-zA-Z0-9]*'
+
+Resources:
+
+  SNSTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      DisplayName: !Ref DisplayName 
+      TopicName: !Ref TopicName 
+
+Outputs:
+
+  TopicArn:
+    Description: ARN of the newly created SNS topic
+    Value: !Ref SNSTopic
+    Export:
+      Name: !Join
+              - ''
+              - - !Ref AWS::StackName
+                - '-SNSTopicARN'
