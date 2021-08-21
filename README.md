@@ -6,11 +6,12 @@ Assorted tools and experiments.
 
 ## Pre-commit Hooks
 
-This repository uses [Husky](https://typicode.github.io/husky/) to provide pre-commit hooks.
+This repository uses [Husky](https://typicode.github.io/husky/) to provide Git hooks.
 
-If [gitleaks](https://github.com/zricethezav/gitleaks) is installed, it will run on the repository before the commit is completed.
+Before each commit:
 
-[lint-staged](https://github.com/okonet/lint-staged) will run [cfn-lint](https://github.com/aws-cloudformation/cfn-lint) on YAML files in the *cloudformation/* directory before they are committed.
+- [gitleaks](https://github.com/zricethezav/gitleaks) will run on the repository.
+- [lint-staged](https://github.com/okonet/lint-staged) will run [cfn-lint](https://github.com/aws-cloudformation/cfn-lint) on YAML files in the *cloudformation/* directory.
 
 ## Setup
 
