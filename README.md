@@ -15,10 +15,10 @@ If [gitleaks](https://github.com/zricethezav/gitleaks) is installed, it will run
 First, install these tools:
 
 - Node.js
-- The AWS CLI
+- AWS CLI version 2
 - [cfn-lint](https://github.com/aws-cloudformation/cfn-lint).
 - [gitleaks](https://github.com/zricethezav/gitleaks)
 
-Run *npm install* to set up the pre-commit hooks:
+Next, run *npm install* to set up the pre-commit hooks:
 
     npm install
