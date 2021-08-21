@@ -2,6 +2,8 @@
 
 Assorted tools and experiments.
 
+[![Stability: Experimental](https://masterminds.github.io/stability/experimental.svg)](https://masterminds.github.io/stability/experimental.html)
+
 ## Pre-commit Hooks
 
 This repository uses [Husky](https://typicode.github.io/husky/) to provide pre-commit hooks.
