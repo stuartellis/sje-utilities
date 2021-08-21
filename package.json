@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Tools and experiments",
   "scripts": {
+    "cfn:lint": "cfn-lint cloudformation/**/*.yml",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
