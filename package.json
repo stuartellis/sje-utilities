@@ -21,10 +21,12 @@
   },
   "homepage": "https://github.com/stuartellis/sje-utilities#readme",
   "lint-staged": {
+    "cloudformation/**/*.json": "jsonlint -cq",
     "cloudformation/**/*.{yml,yaml}": "cfn-lint --include-checks I -t"
-},
+  },
   "devDependencies": {
     "husky": "^7.0.0",
+    "jsonlint": "^1.6.3",
     "lint-staged": "^11.1.2"
   }
 }
