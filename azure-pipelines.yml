@@ -1,0 +1,28 @@
+variables:
+  - template: ./.azure-pipelines/variables.yml
+
+name: ${{variables.name}}-pipeline
+
+trigger:
+  - main
+
+stages:
+- stage: test
+  displayName: Tests
+  pool:
+    vmImage: ${{ variables.vmImage }}
+  jobs:
+    - job: cfnTest
+      steps:
+      - task: UsePythonVersion@0
+        inputs:
+          versionSpec: '3.x'
+      - task: UsePythonVersion@0
+        inputs:
+          versionSpec: '3.x'
+      - script: python -m pip install --upgrade pip
+        displayName: 'Install Python tools'
+      - script: python -m pip install cfn-lint
+        displayName: 'Install cfn-lint'
+      - script: cfn-lint --include-checks I -t cloudformation/**/*.yml
+        displayName: 'Run cfn-lint'

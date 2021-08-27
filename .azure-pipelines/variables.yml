@@ -1,0 +1,9 @@
+variables:
+  - name: name
+    value: sje-utilities
+  - name: vmImage
+    value: ubuntu-20.04
+  - name: nodejsVersion
+    value: 12.x
+  - name: pythonVersion
+    version: 3.x
