@@ -19,7 +19,7 @@ stages:
           versionSpec: ${{ variables.pythonVersion }}
       - script: python -m pip install --upgrade pip
         displayName: 'Install Python tools'
-      - script: pip install -r requirements.txt
-        displayName: 'Install requirements'
-      - script: cfn-lint --include-checks I -t cloudformation/**/*.yml
+      - script: pip install cfn-lint==${{ variables.cfnlintVersion }}
+        displayName: 'Install cfn-lint'
+      - script: $HOME/.local/cfn-lint --include-checks I -t cloudformation/**/*.yml
         displayName: 'Run cfn-lint'

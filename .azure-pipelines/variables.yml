@@ -7,3 +7,5 @@ variables:
     value: 12.x
   - name: pythonVersion
     value: 3.x
+  - name: cfnlintVersion
+    value: 0.49.2
