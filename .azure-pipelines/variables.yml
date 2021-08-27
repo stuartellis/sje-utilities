@@ -6,4 +6,4 @@ variables:
   - name: nodejsVersion
     value: 12.x
   - name: pythonVersion
-    version: 3.x
+    value: 3.x

@@ -16,13 +16,10 @@ stages:
       steps:
       - task: UsePythonVersion@0
         inputs:
-          versionSpec: '3.x'
-      - task: UsePythonVersion@0
-        inputs:
-          versionSpec: '3.x'
+          versionSpec: ${{ variables.pythonVersion }}
       - script: python -m pip install --upgrade pip
         displayName: 'Install Python tools'
-      - script: python -m pip install cfn-lint
-        displayName: 'Install cfn-lint'
+      - script: pip install -r requirements.txt
+        displayName: 'Install requirements'
       - script: cfn-lint --include-checks I -t cloudformation/**/*.yml
         displayName: 'Run cfn-lint'
