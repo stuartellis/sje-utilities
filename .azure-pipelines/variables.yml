@@ -8,4 +8,4 @@ variables:
   - name: pythonVersion
     value: 3.x
   - name: cfnlintVersion
-    value: 0.49.2
+    value: 0.53.0
