@@ -35,7 +35,11 @@ stages:
       - task: Npm@1
         inputs:
           command: custom
-          customCommand: ci --ignore-scripts
+          customCommand: npm set-script prepare ""
+        displayName: 'Disable npm Install Hook'
+      - task: Npm@1
+        inputs:
+          command: ci
         displayName: 'Install npm Packages'
       - bash: find cloudformation -type f -name "*.json" -exec npx jsonlint -cq {} \;
         displayName: 'Run json-lint'
