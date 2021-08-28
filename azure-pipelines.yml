@@ -20,7 +20,7 @@ stages:
           versionSpec: ${{ variables.pythonVersion }}
         displayName: Use Python ${{ variables.pythonVersion }}
       - script: python -m pip install --upgrade pip
-        displayName: 'Install Python tools'
+        displayName: 'Install Python Tools'
       - script: pip install cfn-lint==${{ variables.cfnlintVersion }}
         displayName: 'Install cfn-lint'
       - script: cfn-lint --include-checks I -t cloudformation/**/*.yml
@@ -34,7 +34,8 @@ stages:
         displayName: Use Node.js ${{ variables.nodejsVersion }}
       - task: Npm@1
         inputs:
-          command: ci
-        displayName: 'npm ci install'
+          command: custom
+          customCommand: ci --ignore-scripts
+        displayName: 'Install npm Packages'
       - bash: find cloudformation -type f -name "*.json" -exec npx jsonlint -cq {} \;
         displayName: 'Run json-lint'
