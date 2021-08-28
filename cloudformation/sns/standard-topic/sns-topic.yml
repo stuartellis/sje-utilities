@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: SNS message topic
+Description SNS message topic
 
 Parameters:
 
