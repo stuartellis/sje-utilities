@@ -8,11 +8,12 @@ trigger:
 
 stages:
 - stage: test
-  displayName: Tests
+  displayName: CloudFormation Tests
   pool:
     vmImage: ${{ variables.vmImage }}
   jobs:
-    - job: cfnTest
+    - job: cfnTests
+      displayName: CFN Templates Tests
       steps:
       - task: UsePythonVersion@0
         inputs:
@@ -24,7 +25,8 @@ stages:
         displayName: 'Install cfn-lint'
       - script: cfn-lint --include-checks I -t cloudformation/**/*.yml
         displayName: 'Run cfn-lint'
-    - job: jsonTest
+    - job: jsonTests
+      displayName: CFN Parameters Tests
       steps:
       - task: NodeTool@0
         inputs:
