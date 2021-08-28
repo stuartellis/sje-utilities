@@ -11,7 +11,7 @@ This repository uses [Husky](https://typicode.github.io/husky/) to provide Git h
 Before each commit:
 
 - [gitleaks](https://github.com/zricethezav/gitleaks) will run on the repository.
-- [lint-staged](https://github.com/okonet/lint-staged) will run [cfn-lint](https://github.com/aws-cloudformation/cfn-lint) on YAML files in the *cloudformation/* directory.
+- [lint-staged](https://github.com/okonet/lint-staged) will test commits to the *cloudformation/* directory. It runs [cfn-lint](https://github.com/aws-cloudformation/cfn-lint) on YAML files and [jsonlint](https://www.npmjs.com/package/jsonlint) on JSON files.
 
 ## Setup
 
