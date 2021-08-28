@@ -17,6 +17,7 @@ stages:
       - task: UsePythonVersion@0
         inputs:
           versionSpec: ${{ variables.pythonVersion }}
+        displayName: Use Python ${{ variables.pythonVersion }}
       - script: python -m pip install --upgrade pip
         displayName: 'Install Python tools'
       - script: pip install cfn-lint==${{ variables.cfnlintVersion }}
@@ -25,12 +26,13 @@ stages:
         displayName: 'Run cfn-lint'
     - job: jsonTest
       steps:
-      - task: UsePythonVersion@0
+      - task: NodeTool@0
         inputs:
           versionSpec: ${{ variables.nodejsVersion }}
-      - script: python -m pip install --upgrade pip
-        displayName: 'Install Python tools'
-      - script: pip install cfn-lint==${{ variables.cfnlintVersion }}
-        displayName: 'Install cfn-lint'
-      - script: cfn-lint --include-checks I -t cloudformation/**/*.yml
-        displayName: 'Run cfn-lint'
+        displayName: Use Node.js ${{ variables.nodejsVersion }}
+      - task: Npm@1
+        inputs:
+          command: install
+        displayName: 'npm install'
+      - bash: find cloudformation/**/*.json -exec npx jsonlint -cq {} \;
+        displayName: 'Run json-lint'
