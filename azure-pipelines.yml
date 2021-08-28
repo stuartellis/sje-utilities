@@ -34,5 +34,5 @@ stages:
         inputs:
           command: install
         displayName: 'npm install'
-      - bash: find cloudformation/**/*.json -exec npx jsonlint -cq {} \;
+      - bash: find cloudformation -type f -name "*.json" -exec npx jsonlint -cq {} \;
         displayName: 'Run json-lint'
