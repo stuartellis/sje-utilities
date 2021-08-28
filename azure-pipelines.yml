@@ -34,7 +34,7 @@ stages:
         displayName: Use Node.js ${{ variables.nodejsVersion }}
       - task: Npm@1
         inputs:
-          command: install
-        displayName: 'npm install'
+          command: ci
+        displayName: 'npm ci install'
       - bash: find cloudformation -type f -name "*.json" -exec npx jsonlint -cq {} \;
         displayName: 'Run json-lint'
