@@ -1,0 +1,18 @@
+{
+    "ado": {
+        "serviceUrl": "https://dev.azure.com",
+        "organization": "sjellis",
+        "project": "sje-ado-labs",
+        "queries": {
+            "releases": {
+                "list": "https://vsrm.dev.azure.com/{organization}/{project}/_apis/release/releases?api-version=6.0"
+            },
+            "repos": {
+                "list": "https://dev.azure.com/{organization}/{project}/_apis/git/repositories?api-version=6.0&includeLinks=true"
+            }
+        }
+    },
+    "schema": {
+        "version": "0.1.0"
+    }
+}
