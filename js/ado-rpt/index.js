@@ -43,8 +43,16 @@ async function main() {
   console.log(repoNames);
 
   const reposDirPath = [baseDirPath, 'repos'].join(path.sep);
-  await fs.mkdir(reposDirPath);
-
+  try {
+    await fs.mkdir(reposDirPath);
+  } catch(err) {
+    if (err.code === 'EEXIST') {
+      console.log(`Skipping directory creation: ${reposDirPath}`);
+    } else {
+      throw err;
+    }
+  }
+  
   const reposIndexFilePath = [reposDirPath, 'repos.json'].join(path.sep);
   const reposIndexFile = await fs.writeFile(reposIndexFilePath, JSON.stringify(resp.data));
 }
@@ -55,6 +63,10 @@ function adoUrl(urlTemplate, organization, project) {
 
 async function get(client, url) {
   return client.get(url);
+}
+
+async function getRepoData(repoName) {
+  console.log(repoName);
 }
 
 main();

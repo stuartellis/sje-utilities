@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "clean": "rimraf data",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Stuart Ellis <stuart@stuartellis.name>",
@@ -13,5 +14,8 @@
     "fastq": "^1.13.0",
     "jsonpath-plus": "^6.0.1",
     "urijs": "^1.19.7"
+  },
+  "devDependencies": {
+    "rimraf": "^3.0.2"
   }
 }
