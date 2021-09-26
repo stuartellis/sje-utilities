@@ -2,11 +2,16 @@
 
 const fs = require('fs').promises;
 const path = require('path');
+
+const { JSONPath } = require('jsonpath-plus');
+
 const URI = require('urijs');
 const URITemplate = require('urijs/src/URITemplate');
 
-const { client: adoClient, pat: adoPat, response: adoResponse } = require('./src/ado');
-const { timestamp } = require('./src/formats');
+const fastq = require('fastq');
+
+const { client: adoClient, pat: adoPat } = require('./src/ado');
+const { timestamp: timestampFmt } = require('./src/formats');
 
 async function main() {
 
@@ -18,31 +23,38 @@ async function main() {
   const userToken = process.env['AZURE_DEVOPS_EXT_PAT'];
   const adoKey = adoPat.encode(userToken);
 
-  // Define timestamp
+  // Create base directory
   const dt = new Date();
-  const timeStamp = timestamp.asString(dt);
-  const exportsPath = ['.', 'data', timeStamp].join(path.sep);
-
-  // Create directory
-  const exportsBaseDir = await fs.mkdir(exportsPath, { recursive: true });
+  const timestamp = timestampFmt.asString(dt);
+  const baseDirPath = ['.', 'data', timestamp].join(path.sep);
+  await fs.mkdir(baseDirPath, { recursive: true });
+  console.log(`Directory: ${baseDirPath}`);
 
   // Create ADO client
   const client = adoClient.create(adoKey);
 
-  // Download repo data
-  const reposQueryUrl = URI.expand(config.ado.queries.repos.list, {
-    organization: config.ado.organization,
-    project: config.ado.project
-  });
-  const reposDataPath = [exportsPath, 'repos'].join(path.sep);
-  
-  // Error if directory already exists
-  const reposDataDir = await fs.mkdir(reposDataPath);
-  
-  const resp = await client.get(reposQueryUrl.toString());
-  const reposFilePath = [reposDataPath, 'repos.json'].join(path.sep);
-  const reposFile = await fs.writeFile(reposFilePath, JSON.stringify(resp.data));
-  //console.log(adoResponse.parse(resp.data));
+  const reposQueryUrl = adoUrl(config.ado.queries.repos.index,
+    config.ado.organization,
+    config.ado.project
+  );
+ 
+  const resp = await get(client, reposQueryUrl.toString());
+  const repoNames = JSONPath('$.value[*].name', resp.data);
+  console.log(repoNames);
+
+  const reposDirPath = [baseDirPath, 'repos'].join(path.sep);
+  await fs.mkdir(reposDirPath);
+
+  const reposIndexFilePath = [reposDirPath, 'repos.json'].join(path.sep);
+  const reposIndexFile = await fs.writeFile(reposIndexFilePath, JSON.stringify(resp.data));
+}
+
+function adoUrl(urlTemplate, organization, project) {
+  return URI.expand(urlTemplate, {organization, project});
+}
+
+async function get(client, url) {
+  return client.get(url);
 }
 
 main();
