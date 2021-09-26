@@ -1,3 +1,4 @@
 const timestamp = require('./timestamp');
+const url = require('./url');
 
-module.exports = { timestamp };
+module.exports = { timestamp, url };
