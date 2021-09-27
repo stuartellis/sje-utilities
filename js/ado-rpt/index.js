@@ -10,7 +10,7 @@ const fastq = require('fastq');
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-const { client: adoClient, pat: adoPat } = require('./src/lib/ado');
+const { client: adoClient, mapping: adoMapper, pat: adoPat } = require('./src/lib/ado');
 const { timestamp: timestampFmt, url: urlFmt } = require('./src/lib/formats');
 
 async function main() {
@@ -67,9 +67,7 @@ async function main() {
   // FIXME: Handle file creation errors
   const reposIndexFile = await fs.writeFile(reposIndexFilePath, JSON.stringify(resp.data));
 
-  // Queue fetch of data
-  
-  const repoDataQueue = fastq.promise(getRepoData, 1);
+  const dataImportQueue = fastq.promise(fetchRepoData, 1);
 
   // FIXME: Add logger to task
   repoNames.forEach(repositoryId => {
@@ -81,11 +79,11 @@ async function main() {
       repositoryId: repositoryId,
       urlTemplate: reposItemUrlTmpl
     };
-    repoDataQueue.push(task);
+    dataImportQueue.push(task);
   });
 }
 
-async function getRepoData(task) {
+async function fetchRepoData(task) {
   const queryUrl = urlFmt.fromTemplate(task.urlTemplate, {organization: task.organization, project: task.project, repositoryId: task.repositoryId});
   console.log(`Repository: ${task.repositoryId}`);
 
@@ -95,9 +93,10 @@ async function getRepoData(task) {
   // FIXME: Handle file creation errors
   const filePath = [task.dirPath, `${task.repositoryId}.json`].join(path.sep);
   const writer = await fs.writeFile(filePath, JSON.stringify(resp.data));
-
-  // Data load
-
+  console.log(filePath);
+  const dataObj = adoMapper.repo(resp.data);
+  console.log(dataObj);
+  await prisma.repo.create({data: dataObj});
 }
 
 main().finally(async () => {
