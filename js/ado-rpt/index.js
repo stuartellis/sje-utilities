@@ -11,14 +11,18 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 const { client: adoClient, mapping: adoMapper, pat: adoPat } = require('./src/lib/ado');
-const { timestamp: timestampFmt, url: urlFmt } = require('./src/lib/formats');
+const { timestamp: timestampFmt, url: urlFmt, url } = require('./src/lib/formats');
 
-async function main() {
+async function main(dataType) {
 
   // Get config
 
   const configJson = await fs.readFile('config.json');
   const config = JSON.parse(configJson);
+
+  const itemIdentifier = config.ado.queries[dataType].identifier;
+  const itemIndexUrlTmpl = config.ado.queries[dataType].index;
+  const itemDetailUrlTmpl = config.ado.queries[dataType].item;
 
   // Get PAT
   // FIXME: Handle case where env var is missing
@@ -35,12 +39,12 @@ async function main() {
   await fs.mkdir(baseDirPath, { recursive: true });
   console.log(`Directory: ${baseDirPath}`);
 
-  const reposDirPath = [baseDirPath, 'repos'].join(path.sep);
+  const itemsDirPath = [baseDirPath, dataType].join(path.sep);
   try {
-    await fs.mkdir(reposDirPath);
+    await fs.mkdir(itemsDirPath);
   } catch(err) {
     if (err.code === 'EEXIST') {
-      console.log(`Skipping directory creation: ${reposDirPath}`);
+      console.log(`Skipping directory creation: ${itemsDirPath}`);
     } else {
       throw err;
     }
@@ -50,55 +54,54 @@ async function main() {
 
   const adoConnector = adoClient.create(adoKey);
   const { organization, project } = config.ado;
-  const reposIndexUrlTmpl = config.ado.queries.repos.index;
-  const reposItemUrlTmpl = config.ado.queries.repos.item;
 
   // Fetch index
 
-  const reposQueryUrl = urlFmt.fromTemplate(reposIndexUrlTmpl,
+  const indexQueryUrl = urlFmt.fromTemplate(itemIndexUrlTmpl,
     { organization, project }
   );
  
   // FIXME: Handle HTTP error
-  const resp = await adoConnector.get(reposQueryUrl.toString());
-  const repoNames = JSONPath('$.value[*].name', resp.data);
+  const resp = await adoConnector.get(indexQueryUrl.toString());
+  const itemNames = JSONPath('$.value[*].name', resp.data);
 
-  const reposIndexFilePath = [baseDirPath, 'repos-index.json'].join(path.sep);
+  const indexFilePath = [baseDirPath, `${dataType}-index.json`].join(path.sep);
   // FIXME: Handle file creation errors
-  const reposIndexFile = await fs.writeFile(reposIndexFilePath, JSON.stringify(resp.data));
+  const indexFile = await fs.writeFile(indexFilePath, JSON.stringify(resp.data));
 
-  const dataImportQueue = fastq.promise(fetchRepoData, 1);
+  const dataImportQueue = fastq.promise(importDataItem, 1);
 
   // FIXME: Add logger to task
-  repoNames.forEach(repositoryId => {
+  itemNames.forEach(itemId => {
+
+    const urlQueryObj = {organization: organization, project: project};
+    urlQueryObj[itemIdentifier] = itemId;
+    const queryUrl = urlFmt.fromTemplate(itemDetailUrlTmpl, urlQueryObj);
+    const filePath = [itemsDirPath, `${itemId}.json`].join(path.sep);
+    console.log(`Item: ${itemId}`);
+
     const task = {
       client: adoConnector,
-      dirPath: reposDirPath,
-      organization: organization, 
-      project: project, 
-      repositoryId: repositoryId,
-      urlTemplate: reposItemUrlTmpl
+      dataType: dataType,
+      filePath: filePath,
+      queryUrl: queryUrl
     };
     dataImportQueue.push(task);
   });
 }
 
-async function fetchRepoData(task) {
-  const queryUrl = urlFmt.fromTemplate(task.urlTemplate, {organization: task.organization, project: task.project, repositoryId: task.repositoryId});
-  console.log(`Repository: ${task.repositoryId}`);
-
+async function importDataItem(task) {
   // FIXME: Handle HTTP error
-  const resp = await task.client.get(queryUrl.toString());
+  const resp = await task.client.get(task.queryUrl.toString());
+  console.log(task.queryUrl);
 
   // FIXME: Handle file creation errors
-  const filePath = [task.dirPath, `${task.repositoryId}.json`].join(path.sep);
-  const writer = await fs.writeFile(filePath, JSON.stringify(resp.data));
-  console.log(filePath);
-  const dataObj = adoMapper.repo(resp.data);
-  console.log(dataObj);
-  await prisma.repo.create({data: dataObj});
+  const writer = await fs.writeFile(task.filePath, JSON.stringify(resp.data));
+  console.log(task.filePath);
+  const dataObj = adoMapper[task.dataType](resp.data);
+  await prisma[task.dataType].create({data: dataObj});
 }
 
-main().finally(async () => {
+main('repo').finally(async () => {
   await prisma.$disconnect();
 });
