@@ -16,6 +16,7 @@
     "urijs": "^1.19.7"
   },
   "devDependencies": {
+    "prisma": "^3.1.1",
     "rimraf": "^3.0.2"
   }
 }

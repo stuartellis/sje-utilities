@@ -1,12 +1,5 @@
-
-# macoOS generated file
-.DS_Store
-
-# Generate directory
+# Generated
 data
-
-# Environmnet file
-.env
 
 # Logs
 logs
