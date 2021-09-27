@@ -65,7 +65,7 @@ async function main(dataType) {
  
   // FIXME: Handle HTTP error
   const resp = await adoConnector.get(indexQueryUrl.toString());
-  const itemNames = JSONPath('$.value[*].name', resp.data);
+  const itemIds = JSONPath('$.value[*].id', resp.data);
 
   const indexFilePath = [baseDirPath, `${dataType}-index.json`].join(path.sep);
   // FIXME: Handle file creation errors
@@ -74,7 +74,7 @@ async function main(dataType) {
   const dataImportQueue = fastq.promise(importDataItem, 1);
 
   // FIXME: Add logger to task
-  itemNames.forEach(itemId => {
+  itemIds.forEach(itemId => {
 
     const urlQueryObj = {organization: organization, project: project};
     urlQueryObj[itemIdentifier] = itemId;
@@ -104,6 +104,6 @@ async function importDataItem(task) {
   await prisma[task.dataType].create({data: dataObj});
 }
 
-main('repo').finally(async () => {
+main('pipeline').finally(async () => {
   await prisma.$disconnect();
 });
