@@ -7,8 +7,8 @@ const { JSONPath } = require('jsonpath-plus');
 
 const fastq = require('fastq');
 
-const { client: adoClient, pat: adoPat } = require('./src/ado');
-const { timestamp: timestampFmt, url: urlFmt } = require('./src/formats');
+const { client: adoClient, pat: adoPat } = require('./src/lib/ado');
+const { timestamp: timestampFmt, url: urlFmt } = require('./src/lib/formats');
 
 async function main() {
 
@@ -18,7 +18,7 @@ async function main() {
   const config = JSON.parse(configJson);
 
   // Get PAT
-  // FIXME: Handle missing env var
+  // FIXME: Handle case where env var is missing
 
   const userToken = process.env['AZURE_DEVOPS_EXT_PAT'];
   const adoKey = adoPat.encode(userToken);
