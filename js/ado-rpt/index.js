@@ -11,7 +11,7 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 const { client: adoClient, mapping: adoMapper, pat: adoPat } = require('./src/lib/ado');
-const { timestamp: timestampFmt, url: urlFmt, url } = require('./src/lib/formats');
+const { timestamp: timestampFmt, url: urlFmt } = require('./src/lib/formats');
 
 async function main(dataType) {
 
