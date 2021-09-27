@@ -9,3 +9,14 @@ datasource db {
 generator client {
   provider = "prisma-client-js"
 }
+
+model Repo {
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  adoId       String?
+  name        String   @db.VarChar(255)
+  description String?
+  url         String?
+  isDisabled  Boolean
+}

@@ -7,6 +7,9 @@ const { JSONPath } = require('jsonpath-plus');
 
 const fastq = require('fastq');
 
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
+
 const { client: adoClient, pat: adoPat } = require('./src/lib/ado');
 const { timestamp: timestampFmt, url: urlFmt } = require('./src/lib/formats');
 
@@ -92,6 +95,11 @@ async function getRepoData(task) {
   // FIXME: Handle file creation errors
   const filePath = [task.dirPath, `${task.repositoryId}.json`].join(path.sep);
   const writer = await fs.writeFile(filePath, JSON.stringify(resp.data));
+
+  // Data load
+
 }
 
-main();
+main().finally(async () => {
+  await prisma.$disconnect();
+});

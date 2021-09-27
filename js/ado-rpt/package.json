@@ -10,6 +10,7 @@
   "author": "Stuart Ellis <stuart@stuartellis.name>",
   "license": "MIT",
   "dependencies": {
+    "@prisma/client": "^3.1.1",
     "axios": "^0.21.4",
     "fastq": "^1.13.0",
     "jsonpath-plus": "^6.0.1",
