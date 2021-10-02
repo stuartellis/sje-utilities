@@ -1,8 +1,5 @@
 {
     "ado": {
-        "serviceUrl": "https://dev.azure.com",
-        "organization": "sjellis",
-        "project": "sje-ado-labs",
         "queries": {
             "pipeline": {
                 "identifier": "pipelineId",

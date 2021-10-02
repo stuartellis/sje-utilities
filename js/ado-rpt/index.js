@@ -3,23 +3,25 @@
 const fs = require('fs').promises;
 const path = require('path');
 
-const { JSONPath } = require('jsonpath-plus');
-
-const fastq = require('fastq');
-
-const { client: adoClient, mapping: adoMapper, pat: adoPat } = require('./src/lib/ado');
+const { client: adoClient, pat: adoPat } = require('./src/lib/ado');
 const { timestamp: timestampFmt, url: urlFmt } = require('./src/lib/formats');
-
-require('dotenv').config();
+const { dirTasks, importTasks } = require('./src/tasks/io');
 
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
+require('dotenv').config();
+
+const { JSONPath } = require('jsonpath-plus');
+const fastq = require('fastq');
+
+main('pipeline').finally(async () => {
+  await prisma.$disconnect();
+});
+
 async function main(dataType) {
-
   // Get config
-
-  const configJson = await fs.readFile('config.json');
+  const configJson = await fs.readFile('mappings.json');
   const config = JSON.parse(configJson);
 
   const itemIdentifier = config.ado.queries[dataType].identifier;
@@ -27,42 +29,31 @@ async function main(dataType) {
   const itemDetailUrlTmpl = config.ado.queries[dataType].item;
 
   // Get PAT
-  // FIXME: Handle case where env var is missing
-
   const userToken = process.env['AZURE_DEVOPS_EXT_PAT'];
   const adoKey = adoPat.encode(userToken);
 
-  // Create base directory
-  // FIXME: Handle directory creation error
-
   const dt = new Date();
   const timestamp = timestampFmt.asString(dt);
-  const baseDirPath = ['.', 'data', timestamp].join(path.sep);
-  await fs.mkdir(baseDirPath, { recursive: true });
-  console.log(`Directory: ${baseDirPath}`);
 
-  const itemsDirPath = [baseDirPath, dataType].join(path.sep);
-  try {
-    await fs.mkdir(itemsDirPath);
-  } catch(err) {
-    if (err.code === 'EEXIST') {
-      console.log(`Skipping directory creation: ${itemsDirPath}`);
-    } else {
-      throw err;
-    }
-  }
+  const baseDirPath = ['.', 'data'].join(path.sep);
+  const taskDirPath = [baseDirPath, timestamp].join(path.sep);
+  const itemsDirPath = [taskDirPath, dataType].join(path.sep);
+  const requiredDirs = [baseDirPath, taskDirPath, itemsDirPath];
   
+  dirTasks.createRequiredDirs(requiredDirs);
+
   // Create ADO client
 
   const adoConnector = adoClient.create(adoKey);
-  const { organization, project } = config.ado;
+  const organization = process.env['AZURE_DEVOPS_ORGANIZATION']; 
+  const project = process.env['AZURE_DEVOPS_PROJECT'];
 
   // Fetch index
 
   const indexQueryUrl = urlFmt.fromTemplate(itemIndexUrlTmpl,
     { organization, project }
   );
- 
+
   // FIXME: Handle HTTP error
   const resp = await adoConnector.get(indexQueryUrl.toString());
   const itemIds = JSONPath('$.value[*].id', resp.data);
@@ -71,7 +62,7 @@ async function main(dataType) {
   // FIXME: Handle file creation errors
   const indexFile = await fs.writeFile(indexFilePath, JSON.stringify(resp.data));
 
-  const dataImportQueue = fastq.promise(importDataItem, 1);
+  const dataImportQueue = fastq.promise(importTasks.dataItem, 1);
 
   // FIXME: Add logger to task
   itemIds.forEach(itemId => {
@@ -86,24 +77,10 @@ async function main(dataType) {
       client: adoConnector,
       dataType: dataType,
       filePath: filePath,
+      prisma: prisma,
       queryUrl: queryUrl
     };
     dataImportQueue.push(task);
   });
+
 }
-
-async function importDataItem(task) {
-  // FIXME: Handle HTTP error
-  const resp = await task.client.get(task.queryUrl.toString());
-  console.log(task.queryUrl);
-
-  // FIXME: Handle file creation errors
-  const writer = await fs.writeFile(task.filePath, JSON.stringify(resp.data));
-  console.log(task.filePath);
-  const dataObj = adoMapper[task.dataType](resp.data);
-  await prisma[task.dataType].create({data: dataObj});
-}
-
-main('pipeline').finally(async () => {
-  await prisma.$disconnect();
-});
