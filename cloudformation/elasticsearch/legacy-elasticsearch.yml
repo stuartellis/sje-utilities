@@ -1,0 +1,43 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: |
+  Legacy Elasticsearch
+
+Resources:
+  ElasticSearchDomain:
+    Type: AWS::Elasticsearch::Domain
+    Properties:
+      DomainName: es-test-0001
+      ElasticsearchVersion: "7.7"
+      ElasticsearchClusterConfig:
+        InstanceCount: 1
+        InstanceType: t3.small.elasticsearch
+        ZoneAwarenessEnabled: false
+        DedicatedMasterEnabled: false
+      EBSOptions:
+        EBSEnabled: true
+        Iops: 0
+        VolumeSize: 10
+        VolumeType: "gp2"
+      SnapshotOptions:
+        AutomatedSnapshotStartHour: 1
+      AccessPolicies:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Principal:
+              AWS: "*"
+            Resource: "*"
+            Action:
+              - "es:ESHttpGet"
+              - "es:ESHttpDelete"
+              - "es:ESHttpPut"
+              - "es:ESHttpPost"
+            Condition:
+              ArnEquals:
+                aws:SourceArn: "arn:aws:*:eu-west-1:333594256635:root"
+
+Outputs:
+  DomainArn:
+    Value: !GetAtt ElasticSearchDomain.DomainArn
+  DomainEndpoint:
+    Value: !GetAtt ElasticSearchDomain.DomainEndpoint
