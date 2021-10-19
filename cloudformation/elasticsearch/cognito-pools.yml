@@ -15,6 +15,13 @@ Resources:
     Type: "AWS::Cognito::UserPool"
     Properties:
       UserPoolName: !Sub ${AWS::StackName}-user-pool
+      AccountRecoverySetting:
+        RecoveryMechanisms:
+          - Name: admin_only
+            Priority: 1
+      AdminCreateUserConfig:
+        AllowAdminCreateUserOnly: true
+        UnusedAccountValidityDays: 1
       AutoVerifiedAttributes:
         - email
       Schema:
