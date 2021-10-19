@@ -89,17 +89,3 @@ Resources:
       IdentityPoolId: !Ref IdentityPool
       Roles:
         authenticated: !GetAtt CognitoAuthorizedRole.Arn
-
-Outputs:
-  UserPoolId:
-    Value: !Ref UserPool
-    Export:
-      Name: "UserPool::Id"
-  UserPoolClientId:
-    Value: !Ref UserPoolClient
-    Export:
-      Name: "UserPoolClient::Id"
-  IdentityPoolId:
-    Value: !Ref IdentityPool
-    Export:
-      Name: "IdentityPool::Id"
