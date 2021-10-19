@@ -111,11 +111,11 @@ Resources:
                 Resource: "*"
               - Effect: "Allow"
                 Action:
-                  - "es:ESHttpGet" # FIXME: Set permissions
+                  - "es:ESHttpGet"
                   - "es:ESHttpDelete"
                   - "es:ESHttpPut"
                   - "es:ESHttpPost"
-                Resource: "*" # Set resource correctly for ES domain
+                Resource: !Sub "arn:${AWS::Partition}:es:${AWS::Region}:${AWS::AccountId}:domain/*/*"
 
   # Assigns the roles to the Identity Pool
   IdentityPoolRoleMapping:
