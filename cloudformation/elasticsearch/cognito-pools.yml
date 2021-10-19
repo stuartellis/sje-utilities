@@ -13,6 +13,8 @@ Parameters:
 Resources:
   UserPool:
     Type: "AWS::Cognito::UserPool"
+    UpdateReplacePolicy: Delete
+    DeletionPolicy: Delete
     Properties:
       UserPoolName: !Sub ${AWS::StackName}-user-pool
       AccountRecoverySetting:
