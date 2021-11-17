@@ -1,0 +1,14 @@
+[
+    {
+        "ParameterKey": "Prefix",
+        "ParameterValue": "test0001"
+    },
+    {
+        "ParameterKey": "ManagedPolicyName",
+        "ParameterValue": "ReadOnlyAccess"
+    },
+    {
+        "ParameterKey": "ManagingAccountID",
+        "ParameterValue": "119559809358"
+    }
+]
