@@ -1,0 +1,107 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: |
+  Standalone EC2 instance
+
+Parameters:
+  AmiId:
+    Type: AWS::EC2::Image::Id
+    Description: The ID of the AMI
+  InstanceType:
+    Type: String
+    Description: The type of the EC2 instance
+    Default: t3a.small
+    AllowedValues:
+      - t3a.nano
+      - t3a.micro
+      - t3a.small
+      - t3a.medium
+      - t3a.large
+  KeyPairName:
+    Type: String
+    Description: The name of the EC2 key pair
+  RootDeviceName:
+    Type: String
+    Description: The identifier for the root volume
+    Default: sda1
+  RootVolumeSize:
+    Type: Number
+    Description: The size of the root volume
+    Default: 12
+  RootVolumeType:
+    Type: String
+    Description: The type of the root volume
+    Default: gp2
+  SubnetId:
+    Type: String
+    Description: The ID of the subnet
+  VpcId:
+    Type: String
+    Description: The ID of the VPC
+  OpsLocation0001:
+    Type: String
+    Description: The CIDR IP range for admin access
+    Default: 0.0.0.0/0
+
+Resources:
+  Instance0001:
+    Type: AWS::EC2::Instance
+    Properties:
+      IamInstanceProfile: !Ref InstanceIamProfile
+      ImageId: !Ref AmiId
+      InstanceType: !Ref InstanceType
+      KeyName: !Ref KeyPairName
+      SecurityGroupIds:
+        - !Ref InstanceRemoteAccess
+      SubnetId: !Ref SubnetId
+      BlockDeviceMappings:
+        - DeviceName: !Sub /dev/${RootDeviceName}
+          Ebs:
+            VolumeSize: !Ref RootVolumeSize
+            VolumeType: !Ref RootVolumeType
+
+  InstanceIamRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - ec2.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      RoleName: !Join
+        - "-"
+        - - !Ref AWS::Region
+          - !Ref AWS::StackName
+          - "SSMManagedInstances"
+
+  InstanceIamProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      InstanceProfileName: !Join
+        - "-"
+        - - !Ref AWS::Region
+          - !Ref AWS::StackName
+          - "InstanceProfile"
+      Roles:
+        - Ref: InstanceIamRole
+
+  InstanceRemoteAccess:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Remote access
+      GroupName: !Sub ${AWS::StackName}-Remote-Access
+      VpcId: !Ref VpcId
+
+  IngressSSHAccess0001:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      CidrIp: !Ref OpsLocation0001
+      FromPort: 22
+      GroupId: !Ref InstanceRemoteAccess
+      IpProtocol: tcp
+      ToPort: 22

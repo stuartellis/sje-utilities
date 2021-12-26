@@ -1,0 +1,25 @@
+---
+- name: Deploy CloudFormation
+  hosts: localhost
+  vars_prompt:
+    - name: stackname
+      prompt: Specify the name for the stack
+      private: no
+
+  tasks:
+    - name: create a cloudformation stack
+      amazon.aws.cloudformation:
+        stack_name: "{{ stackname }}"
+        state: "present"
+        capabilities: CAPABILITY_NAMED_IAM
+        template: "../cloudformation/ec2/managed-single-instance/ec2-managed-single-instance.yml"
+        template_parameters:
+          AmiId: ami-04b683923501a6f2c # x84-64 Ubuntu 20.04
+          InstanceType: t3a.small
+          KeyPairName: sje-np-default-eu-west-1
+          OpsLocation0001: 0.0.0.0/0
+          RootDeviceName: sda1
+          RootVolumeSize: 12
+          RootVolumeType: gp2
+          SubnetId: subnet-252e3d6d
+          VpcId: vpc-44be683d
