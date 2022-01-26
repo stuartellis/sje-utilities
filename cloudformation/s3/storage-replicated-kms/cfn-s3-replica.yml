@@ -1,6 +1,6 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Description: |
-  Replication target S3 bucket
+  Replica bucket
 
 Parameters:
   KmsReplicaKeyArn:

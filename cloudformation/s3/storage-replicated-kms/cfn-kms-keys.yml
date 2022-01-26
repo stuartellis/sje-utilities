@@ -5,15 +5,15 @@ Parameters:
   Prefix:
     Type: String
     Description: The prefix for AWS resource names
-  KeyName0001:
+  KeyName001:
     Type: String
     Description: The name of the KMS key
 
 Resources:
-  KmsKey0001:
+  KmsKey001:
     Type: AWS::KMS::Key
     Properties:
-      Description: !Sub ${Prefix} ${KeyName0001} key
+      Description: !Sub ${Prefix} ${KeyName001} key
       Enabled: True
       KeyPolicy:
         Version: 2012-10-17
@@ -27,18 +27,18 @@ Resources:
       KeySpec: SYMMETRIC_DEFAULT
       PendingWindowInDays: 7 # Default is 30 days
 
-  KmsKey0001Alias:
+  KmsKey001Alias:
     Type: AWS::KMS::Alias
     Properties:
-      AliasName: !Sub "alias/${Prefix}/${KeyName0001}" # Aliases must begin with alias/
-      TargetKeyId: !Ref KmsKey0001
+      AliasName: !Sub "alias/${Prefix}/${KeyName001}" # Aliases must begin with alias/
+      TargetKeyId: !Ref KmsKey001
 
 Outputs:
-  KmsKey0001AliasName:
-    Value: !Ref KmsKey0001Alias
+  KmsKey001AliasName:
+    Value: !Ref KmsKey001Alias
     Export:
       Name: !Sub "${AWS::StackName}-kms-key-alias"
-  KmsKey0001Arn:
-    Value: !GetAtt KmsKey0001.Arn
+  KmsKey001Arn:
+    Value: !GetAtt KmsKey001.Arn
     Export:
       Name: !Sub "${AWS::StackName}-kms-key-arn"
