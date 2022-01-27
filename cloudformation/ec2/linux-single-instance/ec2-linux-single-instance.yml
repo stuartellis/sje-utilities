@@ -19,6 +19,10 @@ Parameters:
   KeyPairName:
     Type: String
     Description: The name of the EC2 key pair
+  RemoteAccessPort:
+    Type: Number
+    Description: The TCP port for remote access
+    Default: 22
   RootDeviceName:
     Type: String
     Description: The identifier for the root volume
@@ -101,7 +105,7 @@ Resources:
     Type: AWS::EC2::SecurityGroupIngress
     Properties:
       CidrIp: !Ref OpsLocation0001
-      FromPort: 22
+      FromPort: !Ref RemoteAccessPort
       GroupId: !Ref InstanceRemoteAccess
       IpProtocol: tcp
-      ToPort: 22
+      ToPort: !Ref RemoteAccessPort
