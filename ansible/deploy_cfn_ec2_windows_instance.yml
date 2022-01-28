@@ -5,6 +5,12 @@
     - name: keypair
       prompt: Specify the name of the keypair
       private: no
+    - name: vpc_id
+      prompt: Specify the ID of the host VPC
+      private: no
+    - name: subnet_id
+      prompt: Specify the ID of the host subnet
+      private: no
     - name: stackname
       prompt: Specify the name for the stack
       private: no
@@ -15,15 +21,16 @@
         stack_name: "{{ stackname }}"
         state: "present"
         capabilities: CAPABILITY_NAMED_IAM
-        template: "../cloudformation/ec2/linux-single-instance/ec2-linux-single-instance.yml"
+        template: "../cloudformation/ec2/windows-single-instance/ec2-windows-single-instance.yml"
         template_parameters:
-          AmiId: ami-04b683923501a6f2c # x84-64 Ubuntu 20.04
-          InstanceType: t3a.small
+          AmiId: ami-0708af7afa9230e4f # Windows Server 2019
+          InstanceType: t3a.large
           KeyPairName: "{{ keypair }}"
           OpsLocation0001: 0.0.0.0/0
-          SshPort: 22
+          RemoteDesktopPort: 3389
+          WinRmPort: 5986
           RootDeviceName: sda1
-          RootVolumeSize: 12
+          RootVolumeSize: 48
           RootVolumeType: gp2
-          SubnetId: subnet-252e3d6d
-          VpcId: vpc-44be683d
+          SubnetId: "{{ subnet_id }}"
+          VpcId: "{{ vpc_id }}"

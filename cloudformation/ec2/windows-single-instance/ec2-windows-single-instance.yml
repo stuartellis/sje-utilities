@@ -9,7 +9,7 @@ Parameters:
   InstanceType:
     Type: String
     Description: The type of the EC2 instance
-    Default: t3a.small
+    Default: t3a.large
     AllowedValues:
       - t3a.nano
       - t3a.micro
@@ -20,10 +20,14 @@ Parameters:
   KeyPairName:
     Type: String
     Description: The name of the EC2 key pair
-  SshPort:
+  RemoteDesktopPort:
     Type: Number
-    Description: The TCP port for SSH remote access
-    Default: 22
+    Description: The TCP port for RDP access
+    Default: 3389
+  WinRmPort:
+    Type: Number
+    Description: The TCP port for WinRM access
+    Default: 5986
   RootDeviceName:
     Type: String
     Description: The identifier for the root volume
@@ -31,7 +35,7 @@ Parameters:
   RootVolumeSize:
     Type: Number
     Description: The size of the root volume
-    Default: 12
+    Default: 48
   RootVolumeType:
     Type: String
     Description: The type of the root volume
@@ -102,11 +106,20 @@ Resources:
       GroupName: !Sub ${AWS::StackName}-Remote-Access
       VpcId: !Ref VpcId
 
-  IngressSSHAccess0001:
+  IngressRdpAccess0001:
     Type: AWS::EC2::SecurityGroupIngress
     Properties:
       CidrIp: !Ref OpsLocation0001
-      FromPort: !Ref SshPort
+      FromPort: !Ref RemoteDesktopPort
       GroupId: !Ref InstanceRemoteAccess
       IpProtocol: tcp
-      ToPort: !Ref SshPort
+      ToPort: !Ref RemoteDesktopPort
+
+  IngressWinRmAccess0001:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      CidrIp: !Ref OpsLocation0001
+      FromPort: !Ref WinRmPort
+      GroupId: !Ref InstanceRemoteAccess
+      IpProtocol: tcp
+      ToPort: !Ref WinRmPort
