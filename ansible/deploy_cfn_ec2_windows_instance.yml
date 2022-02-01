@@ -3,7 +3,7 @@
   hosts: localhost
   vars_prompt:
     - name: keypair
-      prompt: Specify the name of the keypair
+      prompt: Specify the name of the key pair
       private: no
     - name: vpc_id
       prompt: Specify the ID of the host VPC
