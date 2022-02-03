@@ -1,0 +1,21 @@
+---
+- name: Deploy Azure Resource Group
+  hosts: localhost
+  vars_prompt:
+    - name: group_name
+      prompt: Specify the name for the resource group
+      private: no
+    - name: location
+      prompt: Specify the location for the resource group
+      private: no
+  vars:
+    group_tags:
+      - key: "source"
+        value: ansible
+
+  tasks:
+    - name: Deploy resource group {{ group_name }}
+      azure_rm_resourcegroup:
+        name: "{{ group_name }}"
+        location: "{{ location }}"
+        tags: "{{ group_tags | items2dict }}"

@@ -33,6 +33,7 @@ Install Ansible:
     pip3 --user pipx
     pipx install ansible-core
     pipx inject ansible-core boto3
+    pipx inject ansible-core azure msrestazure azure-cli-core 'ansible[azure]' azure-mgmt-privatedns azure-mgmt-storage azure-mgmt-automation
 
 Install extra Ansible collections: 
 
