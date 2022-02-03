@@ -25,3 +25,17 @@ First, install these tools:
 Next, run *npm install* to set up the pre-commit hooks:
 
     npm install
+
+### Installing Ansible
+
+Install Ansible:
+
+    pip3 --user pipx
+    pipx install ansible-core
+    pipx inject ansible-core boto3
+
+Install extra Ansible collections: 
+
+    ansible-galaxy collection install community.general
+    ansible-galaxy collection install amazon.aws
+    ansible-galaxy collection install azure.azcollection
