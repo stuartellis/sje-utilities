@@ -32,11 +32,15 @@ Install Ansible:
 
     pip3 --user pipx
     pipx install ansible-core
+    pipx install ansible-lint
+    pipx inject ansible-lint ansible-core
+
+Install AWS support:
+
     pipx inject ansible-core boto3
-    pipx inject ansible-core azure msrestazure azure-cli-core 'ansible[azure]' azure-mgmt-privatedns azure-mgmt-storage azure-mgmt-automation
-
-Install extra Ansible collections: 
-
-    ansible-galaxy collection install community.general
     ansible-galaxy collection install amazon.aws
+
+Install Azure support:
+
+    pipx inject ansible-core azure msrestazure azure-cli-core 'ansible[azure]' azure-mgmt-privatedns azure-mgmt-storage azure-mgmt-automation
     ansible-galaxy collection install azure.azcollection

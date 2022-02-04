@@ -1,0 +1,27 @@
+---
+- name: Deploy Azure ARM Template
+  hosts: localhost
+  vars_prompt:
+    - name: deployment_name
+      prompt: Specify a name for the deployment
+      private: no
+    - name: group_name
+      prompt: Specify the resource group for the resources
+      private: no
+    - name: location
+      prompt: Specify the location for the resources
+      private: no
+  vars:
+    group_tags:
+      - key: "source"
+        value: ansible
+
+  tasks:
+    - name: Deploy resources to {{ group_name }}
+      azure_rm_deployment:
+        deployment_mode: incremental # Set to 'complete' to delete other resources in the resource group
+        name: "{{ deployment_name }}"
+        location: "{{ location }}"
+        parameters: "{{ lookup('file', 'azuredeploy.json') }}"
+        template: "{{ lookup('file', 'azuredeploy.json') }}"
+        tags: "{{ group_tags | items2dict }}"

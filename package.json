@@ -22,7 +22,8 @@
   "homepage": "https://github.com/stuartellis/sje-utilities#readme",
   "lint-staged": {
     "cloudformation/**/*.json": "jsonlint -cq",
-    "cloudformation/**/*.{yml,yaml}": "cfn-lint --include-checks I -t"
+    "cloudformation/**/*.{yml,yaml}": "cfn-lint --include-checks I -t",
+    "ansible/**/*.{yml,yaml}": "ansible-lint -qq"
   },
   "devDependencies": {
     "husky": "^7.0.0",
