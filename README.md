@@ -43,3 +43,13 @@ Install Azure support:
 
     ansible-galaxy collection install azure.azcollection
     pipx runpip ansible-core install -r ~/.ansible/collections/ansible_collections/azure/azcollection/requirements-azure.txt
+
+Install Windows support:
+
+    ansible-galaxy collection install ansible.windows
+    ansible-galaxy collection install chocolatey.chocolatey
+    pipx inject ansible-core pywinrm
+
+Install Linux support:
+
+    ansible-galaxy collection install jnv.unattended-upgrades

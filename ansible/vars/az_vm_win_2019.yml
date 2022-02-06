@@ -1,5 +1,4 @@
 admin_username: testadmin
-admin_password: testadmin123!
 deployment_name: test-vm-0010
 dns_label_prefix: test-vm-0010
 location: UK South

@@ -13,3 +13,8 @@ To destroy a resource group in Azure:
 To deploy an ARM template for a Virtual Machine in Azure:
 
     ansible-playbook --connection=local ./ansible/azure/deploy_windows_vm.yml --extra-vars "@ansible/vars/az_vm_win_2019.yml"
+
+To run a playbook on a Windows system:
+
+    export no_proxy=*
+    ansible-playbook -ki ansible/inventory/azure.ini ./ansible/windows/update_windows.yml
