@@ -18,7 +18,7 @@
 
   tasks:
     - name: Deploy resources to {{ group_name }}
-      azure_rm_deployment:
+      azure.azcollection.azure_rm_deployment:
         deployment_mode: incremental # Set to 'complete' to delete other resources in the resource group
         name: "{{ deployment_name }}"
         location: "{{ location }}"

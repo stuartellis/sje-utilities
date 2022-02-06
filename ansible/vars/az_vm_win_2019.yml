@@ -1,0 +1,12 @@
+admin_username: testadmin
+admin_password: testadmin123!
+deployment_name: test-vm-0010
+dns_label_prefix: test-vm-0010
+location: UK South
+public_ip_name: test-vm-0010-ip
+public_ip_allocation_method: Dynamic
+public_ip_sku: Basic
+os_version: 2019-datacenter-gensecond
+resource_group_name: sandbox-0010
+vm_size: Standard_B2s
+vm_name: test-vm-0010

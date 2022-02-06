@@ -20,7 +20,6 @@ First, install these tools:
 - Node.js 14 or above
 - AWS CLI version 2
 - [cfn-lint](https://github.com/aws-cloudformation/cfn-lint).
-- [gitleaks](https://github.com/zricethezav/gitleaks)
 
 Next, run *npm install* to set up the pre-commit hooks:
 
@@ -28,7 +27,7 @@ Next, run *npm install* to set up the pre-commit hooks:
 
 ### Installing Ansible
 
-Install Ansible:
+Install Ansible and [Ansible Lint](https://ansible-lint.readthedocs.io/):
 
     pip3 --user pipx
     pipx install ansible-core
@@ -42,5 +41,5 @@ Install AWS support:
 
 Install Azure support:
 
-    pipx inject ansible-core azure msrestazure azure-cli-core 'ansible[azure]' azure-mgmt-privatedns azure-mgmt-storage azure-mgmt-automation
     ansible-galaxy collection install azure.azcollection
+    pipx runpip ansible-core install -r ~/.ansible/collections/ansible_collections/azure/azcollection/requirements-azure.txt

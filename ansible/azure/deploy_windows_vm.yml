@@ -1,0 +1,76 @@
+---
+- name: Deploy Azure ARM Template
+  hosts: localhost
+  vars_prompt:
+    - name: deployment_name
+      prompt: The name for the deployment
+      private: no
+    - name: resource_group_name
+      prompt: The resource group for the resources
+      private: no
+    - name: location
+      prompt: The location for the resources
+      private: no
+    - name: admin_username
+      prompt: The admin username for the Virtual Machine
+      private: no
+    - name: admin_password
+      prompt: The admin password for the Virtual Machine
+      private: yes
+    - name: dns_label_prefix
+      prompt: DNS Name for the Public IP used to access the Virtual Machine
+      private: no
+    - name: public_ip_name
+      prompt: Name for the Public IP used to access the Virtual Machine
+      private: no
+    - name: public_ip_allocation_method # "Dynamic" or "Static"
+      prompt: The allocation method for the Public IP used to access the Virtual Machine
+      private: no
+    - name: public_ip_sku # "Basic" or "Standard"
+      prompt: SKU for the Public IP used to access the Virtual Machine
+      private: no
+    - name: os_version
+      prompt: The Windows version for the VM
+      private: no
+    - name: vm_size
+      prompt: Size of the virtual machine
+      private: no
+    - name: vm_name
+      prompt: Name of the virtual machine
+      private: no
+
+  vars:
+    group_tags:
+      - key: "source"
+        value: ansible
+
+  tasks:
+    - name: Deploy resources to {{ resource_group_name }}
+      azure.azcollection.azure_rm_deployment:
+        deployment_mode: incremental # Set to 'complete' to delete other resources in the resource group
+        name: "{{ deployment_name }}"
+        location: "{{ location }}"
+        resource_group: "{{ resource_group_name }}"
+        parameters:
+          dnsLabelPrefix:
+            value: "{{ dns_label_prefix }}"
+          publicIpName:
+            value: "{{ public_ip_name }}"
+          publicIPAllocationMethod:
+            value: "{{ public_ip_allocation_method }}"
+          publicIpSku:
+            value: "{{ public_ip_sku }}"
+          OSVersion:
+            value: "{{ os_version }}"
+          vmSize:
+            value: "{{ vm_size }}"
+          location:
+            value: "{{ location }}"
+          vmName:
+            value: "{{ vm_name }}"
+          adminUsername:
+            value: "{{ admin_username }}"
+          adminPassword:
+            value: "{{ admin_password }}"
+        template: "{{ lookup('file', '../../arm/virtual-machines/windows-vm.json') }}"
+        tags: "{{ group_tags | items2dict }}"
