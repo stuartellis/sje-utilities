@@ -136,12 +136,25 @@
             "properties": {
                 "securityRules": [
                     {
-                        "name": "default-allow-3389",
+                        "name": "default-allow-rdp",
                         "properties": {
                             "priority": 1000,
                             "access": "Allow",
                             "direction": "Inbound",
                             "destinationPortRange": "3389",
+                            "protocol": "Tcp",
+                            "sourcePortRange": "*",
+                            "sourceAddressPrefix": "*",
+                            "destinationAddressPrefix": "*"
+                        }
+                    },
+                    {
+                        "name": "default-allow-winrm",
+                        "properties": {
+                            "priority": 1100,
+                            "access": "Allow",
+                            "direction": "Inbound",
+                            "destinationPortRange": "5986",
                             "protocol": "Tcp",
                             "sourcePortRange": "*",
                             "sourceAddressPrefix": "*",
