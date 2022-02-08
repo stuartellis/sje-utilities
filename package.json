@@ -21,9 +21,10 @@
   },
   "homepage": "https://github.com/stuartellis/sje-utilities#readme",
   "lint-staged": {
+    "ansible/**/*.{yml,yaml}": "ansible-lint -qq",
+    "arm/**/*.json": "jsonlint -cq",
     "cloudformation/**/*.json": "jsonlint -cq",
-    "cloudformation/**/*.{yml,yaml}": "cfn-lint --include-checks I -t",
-    "ansible/**/*.{yml,yaml}": "ansible-lint -qq"
+    "cloudformation/**/*.{yml,yaml}": "cfn-lint --include-checks I -t"
   },
   "devDependencies": {
     "husky": "^7.0.0",

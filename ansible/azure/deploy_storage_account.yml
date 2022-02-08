@@ -1,0 +1,41 @@
+---
+- name: Deploy Azure ARM Template
+  hosts: localhost
+  vars_prompt:
+    - name: deployment_name
+      prompt: The name for the deployment
+      private: no
+    - name: resource_group_name
+      prompt: The resource group for the resources
+      private: no
+    - name: location
+      prompt: The location for the resources
+      private: no
+    - name: storage_account_type
+      prompt: The type of the storage account
+      private: no
+    - name: storage_account_name
+      prompt: The name of the storage account
+      private: no
+
+  vars:
+    group_tags:
+      - key: "source"
+        value: ansible
+
+  tasks:
+    - name: Deploy resources to {{ resource_group_name }}
+      azure.azcollection.azure_rm_deployment:
+        deployment_mode: incremental # Set to 'complete' to delete other resources in the resource group
+        name: "{{ deployment_name }}"
+        location: "{{ location }}"
+        resource_group: "{{ resource_group_name }}"
+        parameters:
+          storageAccountType:
+            value: "{{ storage_account_type }}"
+          location:
+            value: "{{ location }}"
+          storageAccountName:
+            value: "{{ location }}"
+        template: "{{ lookup('file', '../../arm/storage/storage-account.json') }}"
+        tags: "{{ group_tags | items2dict }}"

@@ -1,0 +1,41 @@
+---
+- name: Deploy Azure ARM Template
+  hosts: localhost
+  vars_prompt:
+    - name: deployment_name
+      prompt: The name for the deployment
+      private: no
+    - name: resource_group_name
+      prompt: The resource group for the resources
+      private: no
+    - name: location
+      prompt: The location for the resources
+      private: no
+    - name: network_security_group_name
+      prompt: The name for the security group
+      private: no
+    - name: ops_source_address
+      prompt: Allowed address
+      private: no
+
+  vars:
+    group_tags:
+      - key: "source"
+        value: ansible
+
+  tasks:
+    - name: Deploy resources to {{ resource_group_name }}
+      azure.azcollection.azure_rm_deployment:
+        deployment_mode: incremental # Set to 'complete' to delete other resources in the resource group
+        name: "{{ deployment_name }}"
+        location: "{{ location }}"
+        resource_group: "{{ resource_group_name }}"
+        parameters:
+          networkSecurityGroupName:
+            value: "{{ network_security_group_name }}"
+          location:
+            value: "{{ location }}"
+          opsSourceAddressPrefix:
+            value: "{{ ops_source_address }}"
+        template: "{{ lookup('file', '../../arm/networking/network-security-group.json') }}"
+        tags: "{{ group_tags | items2dict }}"
