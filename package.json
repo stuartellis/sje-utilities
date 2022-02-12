@@ -22,7 +22,6 @@
   },
   "homepage": "https://github.com/stuartellis/sje-utilities#readme",
   "lint-staged": {
-    "ansible/**/*.{yml,yaml}": "ansible-lint -qq",
     "arm/**/*.json": "jsonlint -cq",
     "cloudformation/**/*.json": "jsonlint -cq",
     "cloudformation/**/*.{yml,yaml}": "cfn-lint --include-checks I -t"
