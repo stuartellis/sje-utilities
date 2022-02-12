@@ -19,7 +19,7 @@
             "type": "string",
             "defaultValue": "*",
             "metadata": {
-                "description": "Source address prefix."
+                "description": "Operations source address."
             }
         }
     },
@@ -32,7 +32,7 @@
             "properties": {
                 "securityRules": [
                     {
-                        "name": "default-allow-ssh",
+                        "name": "ops-allow-ssh",
                         "properties": {
                             "priority": 1100,
                             "access": "Allow",
@@ -45,7 +45,7 @@
                         }
                     },
                     {
-                        "name": "default-allow-winrm",
+                        "name": "ops-allow-winrm",
                         "properties": {
                             "priority": 1200,
                             "access": "Allow",
@@ -58,9 +58,9 @@
                         }
                     },
                     {
-                        "name": "default-allow-rdp",
+                        "name": "ops-allow-rdp",
                         "properties": {
-                            "priority": 2000,
+                            "priority": 1300,
                             "access": "Allow",
                             "direction": "Inbound",
                             "destinationPortRange": "3389",

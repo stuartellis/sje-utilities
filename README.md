@@ -32,7 +32,7 @@ Install Ansible and [Ansible Lint](https://ansible-lint.readthedocs.io/):
     pip3 --user pipx
     pipx install ansible-core
     pipx install ansible-lint
-    pipx inject ansible-lint ansible-core
+    pipx inject ansible-lint ansible-core yamllint
 
 Install AWS support:
 

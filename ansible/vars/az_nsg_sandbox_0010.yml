@@ -1,0 +1,4 @@
+resource_group_name: sandbox-vnet-0010
+location: UK South
+network_security_group_name: nsg-sandbox-0010
+ops_source_address: "*"

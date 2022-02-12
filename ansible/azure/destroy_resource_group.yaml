@@ -1,5 +1,5 @@
 ---
-- name: Deploy Azure Resource Group
+- name: Delete Azure Resource Group
   hosts: localhost
   vars_prompt:
     - name: group_name

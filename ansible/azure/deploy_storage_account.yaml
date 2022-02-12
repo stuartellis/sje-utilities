@@ -1,21 +1,18 @@
 ---
-- name: Deploy Azure ARM Template
+- name: Deploy Azure Storage Account
   hosts: localhost
   vars_prompt:
-    - name: deployment_name
-      prompt: The name for the deployment
-      private: no
     - name: resource_group_name
       prompt: The resource group for the resources
       private: no
     - name: location
       prompt: The location for the resources
       private: no
-    - name: network_security_group_name
-      prompt: The name for the security group
+    - name: storage_account_type
+      prompt: The type of the storage account
       private: no
-    - name: ops_source_address
-      prompt: Allowed address
+    - name: storage_account_name
+      prompt: The name of the storage account
       private: no
 
   vars:
@@ -24,18 +21,18 @@
         value: ansible
 
   tasks:
-    - name: Deploy resources to {{ resource_group_name }}
+    - name: Deploy storage account to {{ resource_group_name }}
       azure.azcollection.azure_rm_deployment:
         deployment_mode: incremental # Set to 'complete' to delete other resources in the resource group
-        name: "{{ deployment_name }}"
+        deployment_name: "{{ storage_account_name }}-{{ ansible_date_time.iso8601_basic_short }}"
         location: "{{ location }}"
         resource_group: "{{ resource_group_name }}"
         parameters:
-          networkSecurityGroupName:
-            value: "{{ network_security_group_name }}"
+          storageAccountType:
+            value: "{{ storage_account_type }}"
           location:
             value: "{{ location }}"
-          opsSourceAddressPrefix:
-            value: "{{ ops_source_address }}"
-        template: "{{ lookup('file', '../../arm/networking/network-security-group.json') }}"
+          storageAccountName:
+            value: "{{ storage_account_name }}"
+        template: "{{ lookup('file', '../../arm/storage/storage-account.json') }}"
         tags: "{{ group_tags | items2dict }}"
