@@ -26,7 +26,7 @@ To deploy an ARM template for a Storage Account in Azure:
 
 To deploy an ARM template for a Virtual Machine in Azure:
 
-    ansible-playbook --connection=local ./ansible/azure/deploy_windows_vm.yaml --extra-vars "@ansible/vars/az_vm_win_2019_standalone.yml"
+    ansible-playbook --connection=local ./ansible/azure/deploy_windows_vm.yaml --extra-vars "@ansible/vars/az_vm_win_2019.yml"
 
 To run a playbook on a remote Windows system:
 
