@@ -1,0 +1,74 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "adminPublicKey": {
+            "value": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDGwa83w5wSh6zG0jQUYgw9fjk5MyKAbO4aL+rbCIQeTPdIPL5dQ+4leCl2EwDkvPqVOhkIwsAx4qMyHprC0ioj87FMqaHNsbI0R1kwN7leQC+gTYRVUtfUYE3x1LlLd8b2tGdTTSvCuY7stoU9u+lSsGpvjsfXc0/MnGfWPPNdMO6gKDKwwsy8jxGEyJ2Jy0T2WgfPmTyeqavhKcNhgNmWv+4TU12IvWE+GliEvkXVlMS+u35z4WzXGgh0R9I3jaQbjT8qUyEvYjCZNi0T34sRT4i+fFHTNjqdT6aVvEXcMs8x94o0tFze6+TnyXFz4FhlFLxbRBZlG6um1b3kKH/pzNtl92Iy32CpguPzwczywrNfg3UdOmyGo2DP8njFk3FH01SE+cvPDl7hF82BkujtWSZR9EzxwFszGV4LxuYtZq4cmDfIF0EQWMsXwR2yFkNKa445cnZ8KyjhlW0mjIIdU1uyvwmvJYSIwlTnv27iDMgYycqgz+/ybZiLtVGb358+b6tZjIXi4Cc6uNJ7/TBejJkVdbc2jhnqCUbGAUfhYG6MnLAzEfXD7QEQ6l6fwNlDdQ0ev2eMRTtJzLCG098XsPZHN8e8N334EUr8INADzw/dvocAbstJsVPcN3DrFwlNpr/qINKbQoGU/KE+uGp5xjr6Devbmz5vrKABaH2OWQ== stuartellis@Stuarts-MBP"
+        },
+        "adminUsername": {
+            "value": "vmadmin"
+        },
+        "diagnosticsStorageAccountName": {
+            "value": "test01diag0010"
+        },
+        "enableAcceleratedNetworking": {
+            "value": false
+        },
+        "location": {
+            "value": "uksouth"
+        },
+        "networkInterfaceName": {
+            "value": "test-ubuntu-05-net0"
+        },
+        "networkSecurityGroupId": {
+            "value": "/subscriptions/5874c492-e72b-4398-9e49-d2b53206acc3/resourceGroups/test01-rg/providers/Microsoft.Network/networkSecurityGroups/test01-nsg-0010"
+        },
+        "nicDeleteOption": {
+            "value": "Delete"
+        },
+        "osDiskSize": {
+            "value": 30
+        },
+        "osDiskType": {
+            "value": "Premium_LRS"
+        },
+        "osDiskDeleteOption": {
+            "value": "Delete"
+        },
+        "patchMode": {
+            "value": "AutomaticByOS"
+        },
+        "pipDeleteOption": {
+            "value": "Delete"
+        },
+        "publicIpAddressName": {
+            "value": "test-ubuntu-05-pip"
+        },
+        "publicIpAddressType": {
+            "value": "Dynamic"
+        },
+        "publicIpAddressSku": {
+            "value": "Basic"
+        },
+        "resourceTags": {
+            "value": {
+                "ManagedBy": "AzureRM"
+            }
+        },
+        "subnetName": {
+            "value": "test01-vnet-0010-subnet-0010"
+        },
+        "virtualMachineName": {
+            "value": "test-ubuntu-05"
+        },
+        "virtualMachineSize": {
+            "value": "Standard_B1ls"
+        },
+        "virtualMachineComputerName": {
+            "value": "test-ubuntu-05"
+        },
+        "virtualNetworkId": {
+            "value": "/subscriptions/5874c492-e72b-4398-9e49-d2b53206acc3/resourceGroups/test01-rg/providers/Microsoft.Network/virtualNetworks/test01-vnet-0010"
+        }
+    }
+}
