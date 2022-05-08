@@ -18,10 +18,10 @@
             "value": "uksouth"
         },
         "networkInterfaceName": {
-            "value": "test-ubuntu-10-net0"
+            "value": "test-ubuntu-20-net0"
         },
         "networkSecurityGroupId": {
-            "value": "/subscriptions/5874c492-e72b-4398-9e49-d2b53206acc3/resourceGroups/test01-rg/providers/Microsoft.Network/networkSecurityGroups/test01-nsg-0010"
+            "value": "/subscriptions/5874c492-e72b-4398-9e49-d2b53206acc3/resourceGroups/exp-vnet-0010-rg/providers/Microsoft.Network/networkSecurityGroups/nsg-public-0030"
         },
         "nicDeleteOption": {
             "value": "Delete"
@@ -56,19 +56,19 @@
             }
         },
         "subnetName": {
-            "value": "test01-vnet-0010-subnet-0010"
+            "value": "subnet-public-0031"
         },
         "virtualMachineName": {
-            "value": "test-ubuntu-10"
+            "value": "test-ubuntu-20"
         },
         "virtualMachineSize": {
             "value": "Standard_B1ls"
         },
         "virtualMachineComputerName": {
-            "value": "test-ubuntu-10"
+            "value": "test-ubuntu-20"
         },
         "virtualNetworkId": {
-            "value": "/subscriptions/5874c492-e72b-4398-9e49-d2b53206acc3/resourceGroups/test01-rg/providers/Microsoft.Network/virtualNetworks/test01-vnet-0010"
+            "value": "/subscriptions/5874c492-e72b-4398-9e49-d2b53206acc3/resourceGroups/exp-vnet-0010-rg/providers/Microsoft.Network/virtualNetworks/vnet-public-0030"
         }
     }
 }
