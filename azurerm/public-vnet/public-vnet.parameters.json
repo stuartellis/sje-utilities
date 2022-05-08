@@ -1,0 +1,35 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vnetName": {
+            "value": "vnet-public-0030"
+        },
+        "vnetAddressPrefix": {
+            "value": "10.0.0.0/16"
+        },
+        "subnet1Prefix": {
+            "value": "10.0.0.0/24"
+        },
+        "subnet1Name": {
+            "value": "subnet-public-0031"
+        },
+        "subnet2Prefix": {
+            "value": "10.0.1.0/24"
+        },
+        "subnet2Name": {
+            "value": "subnet-public-0032"
+        },
+        "location": {
+            "value": "uksouth"
+        },
+        "networkSecurityGroupId": {
+            "value": "/subscriptions/5874c492-e72b-4398-9e49-d2b53206acc3/resourceGroups/exp-vnet-0010-rg/providers/Microsoft.Network/networkSecurityGroups/nsg-public-0030"
+        },
+        "resourceTags": {
+            "value": {
+                "ManagedBy": "AzureRM"
+            }
+        }
+    }
+}
