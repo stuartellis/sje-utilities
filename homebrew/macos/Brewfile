@@ -1,32 +1,18 @@
-# Package repositories
 tap "homebrew/bundle"
 tap "homebrew/cask"
 tap "homebrew/core"
 
-# Homebrew Packages
-brew "asdf"
-brew "aws-vault"
-brew "awscli"
-brew "bitwarden-cli"
-brew "gnupg"
-brew "hugo"
-brew "nmap"
-brew "podman"
-brew "pure"
-brew "rclone"
-brew "shellcheck"
+tap "alajmo/mani"
+brew "alajmo/mani/mani"
 
-# Cask packages
-cask "anki"
-cask "beekeeper-studio"
+brew "asdf"
+brew "chezmoi"
+brew "xz"
+
 cask "firefox"
-cask "google-chrome"
 cask "joplin"
 cask "libreoffice"
-cask "postman"
-cask "raspberry-pi-imager"
 cask "signal"
-cask "skype"
 cask "slack"
 cask "steam"
 cask "tidal"
