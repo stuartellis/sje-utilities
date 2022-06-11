@@ -1,14 +1,13 @@
+tap "alajmo/mani"
 tap "homebrew/bundle"
 tap "homebrew/cask"
 tap "homebrew/core"
-
-tap "alajmo/mani"
-brew "alajmo/mani/mani"
-
 brew "asdf"
-brew "chezmoi"
 brew "xz"
-
+brew "awscli"
+brew "chezmoi"
+brew "alajmo/mani/mani"
+cask "aws-vault"
 cask "firefox"
 cask "joplin"
 cask "libreoffice"
