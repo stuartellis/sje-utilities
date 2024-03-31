@@ -16,10 +16,6 @@ alias bootstrap := setup
 help:
     @just --unstable --list
 
-# Build artifacts
-build:
-    @just --unstable containers::build
-
 # Delete generated files
 clean:
     @just --unstable project::clean
