@@ -30,7 +30,7 @@ You may develop this project with macOS or any Linux system, including a WSL env
 
 - [Git](https://www.git-scm.com/)
 - [just 1.19.0 or above](https://just.systems/)
-- [Python 3.11 or above](https://www.python.org/)
+- [Python 3.12 or above](https://www.python.org/)
 - [pipx](https://pipx.pypa.io/)
 
 You must also set an environment variable *JUST_UNSTABLE* with the value *true*. This project currently requires the environment variable *JUST_UNSTABLE* because it uses [modules](https://just.systems/man/en/chapter_54.html), which are not yet covered by the API stability guarantee for *just*.
