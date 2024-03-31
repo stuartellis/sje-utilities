@@ -8,7 +8,7 @@ SPDX-License-Identifier: MIT
 
 ![stability: experimental](https://img.shields.io/badge/stability-experimental-orange) [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit) [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 
-Utilities and experiments.
+Tools and experiments.
 
 -----
 
@@ -29,7 +29,7 @@ The current version of this project is not for general use.
 
 ## Contributing
 
-Follow the guidance in the *CONTRIBUTING* document to set up a development environment and make changes to this project.
+The current version of this project is not for general use.
 
 ## Licenses
 

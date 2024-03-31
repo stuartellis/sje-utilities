@@ -10,7 +10,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "sje-utilities"
 version = "0.1.0"
-description = "utilities and experiments"
+description = "tools and experiments"
 readme = "README.md"
 requires-python = ">=3.12"
 license = {text = "MIT"}
@@ -31,9 +31,6 @@ dependencies = []
 Documentation = "https://github.com/stuartellis/sje-utilities#readme"
 Issues = "https://github.com/stuartellis/sje-utilities/issues"
 Source = "https://github.com/stuartellis/sje-utilities"
-
-[tool.project.containers]
-runner = {app_name = "canario", base_image = "python:3.12.2-slim-bookworm", build_file = "containers/poetry-runner.dockerfile"}
 
 [tool.mypy]
 plugins = [
