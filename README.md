@@ -1,50 +1,38 @@
-# sje-utilities
+<!--
+SPDX-FileCopyrightText: 2024-present Stuart Ellis <stuart@stuartellis.name>
 
-Assorted tools and experiments.
+SPDX-License-Identifier: MIT
+-->
 
-[![Stability: Experimental](https://masterminds.github.io/stability/experimental.svg)](https://masterminds.github.io/stability/experimental.html)
+# SJE Utilities
 
-## Pre-commit Hooks
+![stability: experimental](https://img.shields.io/badge/stability-experimental-orange) [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit) [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 
-This repository uses [Pre-commit](https://www.pre-commit.com) to provide Git hooks.
+Utilities and experiments.
 
-## Setup
+-----
 
-First, install these tools:
+## Table of Contents
 
-- [Pre-commit](https://www.pre-commit.com)
-- AWS CLI version 2
-- [cfn-lint](https://github.com/aws-cloudformation/cfn-lint).
+- [Install](#install)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [Licenses](#licenses)
 
-Next, run *pre-commit install* to set up the pre-commit hooks:
+## Install
 
-    pre-commit install
+The current version of this project should only be installed by contributors.
 
-### Installing Ansible
+## Usage
 
-Install Ansible and [Ansible Lint](https://ansible-lint.readthedocs.io/):
+The current version of this project is not for general use.
 
-    pip3 --user pipx
-    pipx install ansible-core
-    pipx install ansible-lint
-    pipx inject ansible-lint ansible-core yamllint
+## Contributing
 
-Install AWS support:
+Follow the guidance in the *CONTRIBUTING* document to set up a development environment and make changes to this project.
 
-    pipx inject ansible-core boto3
-    ansible-galaxy collection install amazon.aws
+## Licenses
 
-Install Azure support:
+This project is licensed under the [MIT](https://spdx.org/licenses/MIT.html) license © 2024-present Stuart Ellis.
 
-    ansible-galaxy collection install azure.azcollection
-    pipx runpip ansible-core install -r ~/.ansible/collections/ansible_collections/azure/azcollection/requirements-azure.txt
-
-Install Windows support:
-
-    ansible-galaxy collection install ansible.windows
-    ansible-galaxy collection install chocolatey.chocolatey
-    pipx inject ansible-core pywinrm
-
-Install Linux support:
-
-    ansible-galaxy collection install jnv.unattended-upgrades
+Some configuration files in this project are licensed under the [Creative Commons Zero v1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/) license. Each of these files has the [SPDX](https://spdx.dev/) license identifier *CC0-1.0* either at the top of the file or in a *.license* file that has the same name as the file to be licensed.
