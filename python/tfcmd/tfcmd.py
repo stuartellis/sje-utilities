@@ -5,11 +5,12 @@
 # SPDX-License-Identifier: MIT
 
 """
-Command-line module for the tfcmd application.
+Command-line script for tfcmd.
 
 This script generates TF commands.
 """
 
+import argparse
 import logging
 import logging.config
 import shutil
@@ -17,6 +18,7 @@ import sys
 from typing import Any, TextIO
 
 _DATE_FORMAT = "%Y-%m-%dT%H:%M:%SZ"
+_DESCRIPTION = "Generates TF commands"
 
 logger = logging.getLogger(__name__)
 
@@ -52,6 +54,11 @@ def setup_logging(level: str) -> None:
     logging.config.dictConfig(config=logging_config)
 
 
+def build_arg_parser() -> argparse.ArgumentParser:
+    """Create argument parser."""
+    return argparse.ArgumentParser(description=_DESCRIPTION)
+
+
 class TfNoExeError(Exception):
     """Exception for TF executable."""
 
@@ -64,7 +71,7 @@ class TfNoExeError(Exception):
 def tf_exe_name() -> str:
     """Get command name for TF."""
     exe: str = ""
-    exe_names = ["tofu", "terraform"]
+    exe_names = ["tof", "terraform"]
     for exe_name in exe_names:
         if shutil.which(exe_name):
             exe = exe_name
@@ -77,13 +84,21 @@ def tf_exe_name() -> str:
 def main(argv: list[str], stdout: TextIO) -> None:
     """Run tfcmd from the command-line."""
     try:
-        setup_logging("INFO")
-        print(argv, file=stdout)
-        logger.info(tf_exe_name())
+        setup_logging("ERROR")
+        parser = build_arg_parser()
+        args: argparse.Namespace = parser.parse_args(argv)
+        run(args, stdout)
     except Exception as e:  # noqa: BLE001
         print(e)
         sys.exit(1)
     sys.exit(0)
+
+
+def run(args: argparse.Namespace, stdout: TextIO) -> None:
+    """Run."""
+    start_msg = f"TF executable: {tf_exe_name()}"
+    logger.info(start_msg)
+    print(args, file=stdout)
 
 
 if __name__ == "__main__":
