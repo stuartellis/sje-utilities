@@ -86,6 +86,14 @@ indent-width = 4
 
 target-version = "py312"
 
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+docstring-code-format = false
+docstring-code-line-length = "dynamic"
+
 [tool.ruff.lint]
 select = ["ALL"]
 # Disable some rules for compatibility with ruff formatter:
@@ -101,10 +109,5 @@ dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
     "S101",
 ]
 
-[tool.ruff.format]
-quote-style = "double"
-indent-style = "space"
-skip-magic-trailing-comma = false
-line-ending = "auto"
-docstring-code-format = false
-docstring-code-line-length = "dynamic"
+[tool.ruff.lint.pydocstyle]
+convention = "pep257"
