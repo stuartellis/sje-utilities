@@ -2,6 +2,9 @@
 #
 # SPDX-License-Identifier: MIT
 #
+# Configuration for Ruff code linter and formatter
+#
+# https://docs.astral.sh/ruff/
 
 exclude = [
     ".bzr",
