@@ -27,14 +27,12 @@ repos:
     -   id: mypy
         additional_dependencies:
         -    "pydantic==2.6.4"
+- repo: https://github.com/python-jsonschema/check-jsonschema
+  rev: 0.28.2
+  hooks:
+    - id: check-taskfile
 -   repo: local
     hooks:
-    -   id: check-justfile
-        name: check justfile
-        entry: just
-        language: system
-        args: [--unstable, --fmt, --check, -f]
-        files: justfile
     -   id: trivy-config
         name: trivy config
         entry: trivy
