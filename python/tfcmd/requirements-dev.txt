@@ -2,14 +2,14 @@
 #    uv pip compile requirements-dev.in -qo requirements-dev.txt
 iniconfig==2.0.0
     # via pytest
-mypy==1.9.0
+mypy==1.10.0
 mypy-extensions==1.0.0
     # via mypy
 packaging==24.0
     # via pytest
 pluggy==1.5.0
     # via pytest
-pytest==8.1.1
-ruff==0.3.5
+pytest==8.2.0
+ruff==0.4.2
 typing-extensions==4.11.0
     # via mypy
