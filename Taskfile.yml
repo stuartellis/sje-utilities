@@ -28,15 +28,7 @@ tasks:
   clean:
     desc: Delete generated files
     cmds:
-      - task: hugo:clean
       - task: project:clean
-
-  fmt:
-    desc: Format code
-    aliases: [format]
-    cmds:
-      - task: pre-commit:run
-        vars: { HOOK_ID: "ruff-format" }
 
   lint:
     desc: Run all checks

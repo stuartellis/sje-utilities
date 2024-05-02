@@ -2,17 +2,57 @@
 #
 # SPDX-License-Identifier: MIT
 #
-# Tasks for the Task runner:
+# Python development tasks for the Task runner:
 #
-# https://taskfile.dev/
+# https://taskfile.dev
 
 version: "3"
 
 silent: true
 
 tasks:
+  default:
+    cmds:
+      - task: list
+
+  bootstrap:
+    desc: Set up environment for development
+    aliases: [setup]
+    cmds:
+      - task: dev:compile
+      - task: dev:sync
+
+  list:
+    desc: List available tasks
+    cmds:
+      - task --list
+
+  fmt:
+    desc: Format code
+    dir: "{{.USER_WORKING_DIR}}"
+    cmds:
+      - python3 -m ruff format
 
   test:
     desc: Run Python tests
+    dir: "{{.USER_WORKING_DIR}}"
     cmds:
       - python3 -m pytest
+
+  dev:compile:
+    desc: Compile requirements file
+    dir: "{{.USER_WORKING_DIR}}"
+    cmds:
+      - uv pip compile requirements-dev.in -qo requirements-dev.txt
+
+  dev:editable:
+    desc: Install current project as editable
+    dir: "{{.USER_WORKING_DIR}}"
+    cmds:
+      - .venv/bin/pip install --editable .
+
+  dev:sync:
+    desc: Synchronise environment with requirements
+    dir: "{{.USER_WORKING_DIR}}"
+    cmds:
+      - uv pip sync requirements-dev.txt
