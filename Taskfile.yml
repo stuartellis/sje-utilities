@@ -4,15 +4,15 @@
 #
 # Tasks for the Task runner:
 #
-# https://taskfile.dev/
+# https://taskfile.dev
 
 version: "3"
 
 silent: true
 
 includes:
-  pre-commit: .tasks/pre-commit
-  project: .tasks/project
+  pre-commit: tasks/pre-commit
+  project: tasks/project
 
 tasks:
   default:
