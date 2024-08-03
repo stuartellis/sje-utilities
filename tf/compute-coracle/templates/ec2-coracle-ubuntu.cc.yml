@@ -1,0 +1,15 @@
+#cloud-config
+
+# SPDX-FileCopyrightText: 2024-present Stuart Ellis <stuart@stuartellis.name>
+#
+# SPDX-License-Identifier: MIT
+
+users:
+  - default
+  - name: ${automation_username}
+    gecos: ${automation_username}
+    primary_group: ${automation_username}
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups: users, admin
+
+final_message: "[INFO] cloud-init process complete"
